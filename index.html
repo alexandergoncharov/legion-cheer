@@ -370,14 +370,7 @@
         </div>
         <div class="form-group">
           <label for="age">Возраст спортсмена</label>
-          <select id="age" name="age" required>
-            <option value="">Выберите группу</option>
-            <option value="5-7">5–7 лет — дети</option>
-            <option value="8-11">8–11 лет — мальчики / девочки</option>
-            <option value="12-14">12–14 лет — юноши / девушки</option>
-            <option value="15-18">15–18 лет — юниоры / юниорки</option>
-            <option value="15+">15+ — взрослые</option>
-          </select>
+          <input type="tel" id="age" name="age" required placeholder="Введите возраст..." inputmode="numeric" pattern="[0-9]+" maxlength="2" autocomplete="off" oninput="this.value=this.value.replace(/\D/g,'').slice(0,2)">
         </div>
         <label class="form-checkbox">
           <input type="checkbox" required>
@@ -402,27 +395,19 @@
             <div class="icon">📞</div>
             <div>
               <h4>Телефон</h4>
-              <a href="tel:+79000000000">+7 (900) 000-00-00</a>
+              <a href="tel:+79295945458">+7 (929) 594-54-58</a>
             </div>
           </div>
           <div class="contact-card" style="margin-top: 1rem;">
             <div class="icon">✉️</div>
             <div>
               <h4>Email</h4>
-              <a href="mailto:info@legion-cheer.ru">info@legion-cheer.ru</a>
-            </div>
-          </div>
-          <div class="contact-card" style="margin-top: 1rem;">
-            <div class="icon">📍</div>
-            <div>
-              <h4>Адрес</h4>
-              <p>г. Москва</p>
+              <a href="mailto:cheer.legion@gmail.com">cheer.legion@gmail.com</a>
             </div>
           </div>
           <div class="social-links">
             <a href="#" title="ВКонтакте" aria-label="ВКонтакте">VK</a>
             <a href="#" title="Telegram" aria-label="Telegram">TG</a>
-            <a href="#" title="Instagram" aria-label="Instagram">IG</a>
           </div>
         </div>
         <div class="map-placeholder">
@@ -454,6 +439,6 @@
 
   <script src="js/news-data.js"></script>
   <script src="js/news.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=2"></script>
 </body>
 </html>

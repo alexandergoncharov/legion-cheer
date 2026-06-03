@@ -19,7 +19,41 @@ document.querySelectorAll(".mobile-menu a").forEach((link) => {
   link.addEventListener("click", () => mobileMenu.classList.remove("open"));
 });
 
+const ageInput = document.getElementById("age");
+
+function sanitizeAgeInput() {
+  if (!ageInput) return;
+  const digits = ageInput.value.replace(/\D/g, "").slice(0, ageInput.maxLength || 2);
+  if (ageInput.value !== digits) ageInput.value = digits;
+}
+
+ageInput?.addEventListener("beforeinput", (e) => {
+  if (e.inputType.startsWith("delete") || e.inputType === "historyUndo" || e.inputType === "historyRedo") return;
+  if (e.inputType === "insertFromPaste" || e.inputType === "insertFromDrop") return;
+  if (e.data && /\D/.test(e.data)) e.preventDefault();
+});
+
+ageInput?.addEventListener("input", sanitizeAgeInput);
+
+ageInput?.addEventListener("paste", (e) => {
+  e.preventDefault();
+  const text = (e.clipboardData || window.clipboardData).getData("text");
+  ageInput.value = text.replace(/\D/g, "").slice(0, ageInput.maxLength || 2);
+});
+
+ageInput?.addEventListener("drop", (e) => {
+  e.preventDefault();
+});
+
+ageInput?.addEventListener("blur", sanitizeAgeInput);
+
 signupForm?.addEventListener("submit", (e) => {
+  sanitizeAgeInput();
+  if (!ageInput?.value) {
+    e.preventDefault();
+    ageInput?.focus();
+    return;
+  }
   e.preventDefault();
   signupForm.style.display = "none";
   formSuccess.classList.add("show");
