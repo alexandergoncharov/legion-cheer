@@ -31,7 +31,7 @@ const NEWS = [
     images: [
       "images/gallery-4.png",
       "images/gallery-3.png",
-      "images/training.png",
+      "images/training-pyramid.jpg",
     ],
     content: [
       "Начался новый спортивный сезон в СК «Легион»! Первые тренировки прошли в отличном темпе — спортсмены втягиваются в рабочий режим.",
