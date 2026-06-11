@@ -1,5 +1,28 @@
 const NEWS = [
   {
+    id: "nacionalnye-sorevnovaniya-2026",
+    date: "17.05.26",
+    dateFull: "17 мая 2026",
+    title: "Национальные соревнования 2026",
+    excerpt:
+      "Отделение «Тёплый Стан» — 4 золота, медали в стантах и кубок «самый результативный клуб ФЧР».",
+    cover: "images/news/nationals-cover.png",
+    images: [
+      "images/news/nationals-cover.png",
+      "images/news/nationals-01.png",
+      "images/news/nationals-02.png",
+      "images/news/nationals-03.png",
+      "images/news/nationals-04.png",
+    ],
+    content: [
+      "Наши потрясающие дети из отделения «Тёплый Стан» показали блестящие результаты на прошедших Национальных соревнованиях 2026.",
+      "Группа Легион Кидс — 1 место. Группа Легион Джуниорс — 1 место. Группа Легион Фэмили — 1 место. Стант Легион Титаны — 1 место.",
+      "Стант Легион Микс — 2 место. Стант Legion Fashion — 2 место.",
+      "Стант Legion Extra — 4 место. Стант Legion Sparks — 4 место. Стант Legion Stars — 5 место.",
+      "А также наш клуб выиграл кубок как «самый результативный клуб ФЧР»!",
+    ],
+  },
+  {
     id: "otkrytyj-kubok-legiona-2026",
     date: "30.05.26",
     dateFull: "30 мая 2026",
