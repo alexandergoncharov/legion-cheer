@@ -19,7 +19,7 @@ const LEGION_BRANCHES = [
   },
   {
     id: "nagatinskij",
-    title: "М. Нагатинский",
+    title: "М. Нагатинская",
     address: "Москва, Нагатинский проезд, 15",
     coords: [55.673879, 37.633859],
   },
