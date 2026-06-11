@@ -220,7 +220,7 @@ ul {
   inset: 0;
   background:
     linear-gradient(105deg, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.7) 45%, rgba(10, 10, 10, 0.4) 100%),
-    url("../images/hero.png") center/cover no-repeat;
+    url("../images/hero.png?v=2") center/cover no-repeat;
 }
 
 .hero-bg::after {
