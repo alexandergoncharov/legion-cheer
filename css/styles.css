@@ -233,29 +233,6 @@ ul {
   background: linear-gradient(transparent, var(--black));
 }
 
-.hero-stripes {
-  position: absolute;
-  right: -5%;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 120px;
-  height: 70%;
-  display: flex;
-  opacity: 0.15;
-}
-
-.hero-stripes span {
-  flex: 1;
-}
-
-.hero-stripes span:nth-child(odd) {
-  background: var(--red);
-}
-
-.hero-stripes span:nth-child(even) {
-  background: var(--white);
-}
-
 .hero-content {
   position: relative;
   z-index: 2;
