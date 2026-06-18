@@ -211,6 +211,7 @@ ul {
   min-height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   padding-top: var(--header-h);
   overflow: hidden;
 }
@@ -219,7 +220,14 @@ ul {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(105deg, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.7) 45%, rgba(10, 10, 10, 0.4) 100%),
+    linear-gradient(
+      105deg,
+      rgba(10, 10, 10, 0.97) 0%,
+      rgba(10, 10, 10, 0.88) 32%,
+      rgba(10, 10, 10, 0.55) 55%,
+      rgba(10, 10, 10, 0.2) 78%,
+      rgba(10, 10, 10, 0.05) 100%
+    ),
     url("../images/hero.png?v=2") center/cover no-repeat;
 }
 
@@ -237,13 +245,16 @@ ul {
   position: relative;
   z-index: 2;
   max-width: 720px;
+  margin-left: clamp(1.25rem, 4vw, 3.5rem);
+  margin-right: auto;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75);
 }
 
 .hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(225, 6, 0, 0.15);
+  background: rgba(10, 10, 10, 0.6);
   border: 1px solid var(--red);
   color: var(--red);
   padding: 0.5rem 1rem;
@@ -253,6 +264,8 @@ ul {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: 1.5rem;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
 
 .hero h1 {
@@ -261,18 +274,27 @@ ul {
   line-height: 0.95;
   letter-spacing: 0.03em;
   margin-bottom: 1rem;
+  color: var(--white);
+  text-shadow:
+    0 2px 24px rgba(0, 0, 0, 0.9),
+    0 1px 4px rgba(0, 0, 0, 0.95);
 }
 
 .hero h1 .accent {
   color: var(--red);
   display: block;
+  text-shadow:
+    0 2px 24px rgba(0, 0, 0, 0.9),
+    0 1px 4px rgba(0, 0, 0, 0.95),
+    0 0 40px rgba(225, 6, 0, 0.35);
 }
 
 .hero-sub {
   font-size: 1.15rem;
-  color: var(--gray-light);
+  color: #f2f2f2;
   max-width: 540px;
   margin-bottom: 2rem;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.85);
 }
 
 .hero-actions {
@@ -286,7 +308,7 @@ ul {
   gap: 2.5rem;
   margin-top: 3rem;
   padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .hero-stat strong {
@@ -295,13 +317,15 @@ ul {
   font-size: 2.5rem;
   color: var(--red);
   line-height: 1;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.8);
 }
 
 .hero-stat span {
   font-size: 0.8rem;
-  color: var(--gray);
+  color: #e0e0e0;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.8);
 }
 
 /* About */
@@ -1428,6 +1452,65 @@ ul {
   .hero-stats {
     flex-wrap: wrap;
     gap: 1.5rem;
+  }
+
+  .hero-bg {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(10, 10, 10, 0.8) 0%,
+        rgba(10, 10, 10, 0.9) 50%,
+        rgba(10, 10, 10, 0.95) 100%
+      ),
+      url("../images/hero.png?v=2") center/cover no-repeat;
+  }
+
+  .hero-bg::after {
+    height: 120px;
+  }
+
+  .hero-content {
+    width: calc(100% - 2.5rem);
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+    padding: 1.75rem 1.25rem;
+    background: rgba(10, 10, 10, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  .hero h1,
+  .hero h1 .accent {
+    text-shadow:
+      0 2px 20px rgba(0, 0, 0, 0.95),
+      0 1px 3px rgba(0, 0, 0, 1);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: #fff;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9);
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-stats {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    gap: 1.25rem 2rem;
+  }
+
+  .hero-stat span {
+    color: #f0f0f0;
   }
 
   .news-item {
