@@ -7,6 +7,8 @@ const formSuccess = document.getElementById("formSuccess");
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightboxImg");
 const lightboxClose = document.getElementById("lightboxClose");
+const legalModal = document.getElementById("legalModal");
+const legalModalContent = document.getElementById("legalModalContent");
 
 window.addEventListener("scroll", () => {
   header.classList.toggle("scrolled", window.scrollY > 50);
@@ -80,9 +82,81 @@ function closeLightbox() {
   document.body.style.overflow = "";
 }
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeLightbox();
+function openLegalModal(sectionId) {
+  if (!legalModal) return;
+  legalModal.hidden = false;
+  document.body.style.overflow = "hidden";
+  if (sectionId) {
+    const section = legalModalContent?.querySelector(`#${sectionId}`);
+    section?.scrollIntoView({ behavior: "smooth", block: "start" });
+  } else {
+    legalModalContent?.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+function closeLegalModal() {
+  if (!legalModal) return;
+  legalModal.hidden = true;
+  if (!lightbox?.classList.contains("open")) {
+    document.body.style.overflow = "";
+  }
+}
+
+document.querySelectorAll("[data-legal-open]").forEach((trigger) => {
+  trigger.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    openLegalModal(trigger.dataset.legalSection || "");
+  });
 });
+
+document.querySelectorAll("[data-legal-close]").forEach((el) => {
+  el.addEventListener("click", closeLegalModal);
+});
+
+if (location.hash === "#legal") {
+  openLegalModal();
+  history.replaceState(null, "", location.pathname + location.search);
+} else if (location.hash === "#privacy") {
+  openLegalModal("privacy");
+  history.replaceState(null, "", location.pathname + location.search);
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  if (!legalModal?.hidden) closeLegalModal();
+  else closeLightbox();
+});
+
+const reviewsSlider = document.getElementById("reviewsSlider");
+const reviewsPrev = document.getElementById("reviewsPrev");
+const reviewsNext = document.getElementById("reviewsNext");
+
+function getReviewScrollStep() {
+  const card = reviewsSlider?.querySelector(".review-card");
+  if (!card || !reviewsSlider) return 360;
+  const gap = parseFloat(getComputedStyle(reviewsSlider).gap) || 24;
+  return card.offsetWidth + gap;
+}
+
+function updateReviewsNav() {
+  if (!reviewsSlider || !reviewsPrev || !reviewsNext) return;
+  const maxScroll = reviewsSlider.scrollWidth - reviewsSlider.clientWidth;
+  reviewsPrev.disabled = reviewsSlider.scrollLeft <= 4;
+  reviewsNext.disabled = reviewsSlider.scrollLeft >= maxScroll - 4;
+}
+
+reviewsPrev?.addEventListener("click", () => {
+  reviewsSlider?.scrollBy({ left: -getReviewScrollStep(), behavior: "smooth" });
+});
+
+reviewsNext?.addEventListener("click", () => {
+  reviewsSlider?.scrollBy({ left: getReviewScrollStep(), behavior: "smooth" });
+});
+
+reviewsSlider?.addEventListener("scroll", updateReviewsNav, { passive: true });
+window.addEventListener("resize", updateReviewsNav);
+updateReviewsNav();
 
 const observer = new IntersectionObserver(
   (entries) => {
@@ -96,7 +170,14 @@ const observer = new IntersectionObserver(
   { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
 );
 
-document.querySelectorAll(".section:not(#contacts), .award-card, .benefit-card, .coach-card, .price-card, .age-card, .branch-card, .news-item, .review-card").forEach((el) => {
+document.querySelectorAll(".section:not(#contacts):not(.reviews-section), .award-card, .benefit-card, .coach-card, .price-card, .age-card, .branch-card, .news-item").forEach((el) => {
+  el.style.opacity = "0";
+  el.style.transform = "translateY(24px)";
+  el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+  observer.observe(el);
+});
+
+document.querySelectorAll(".reviews-section .container").forEach((el) => {
   el.style.opacity = "0";
   el.style.transform = "translateY(24px)";
   el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
