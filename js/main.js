@@ -128,35 +128,45 @@ document.addEventListener("keydown", (e) => {
   else closeLightbox();
 });
 
+function initHorizontalScroll(slider, prev, next, itemSelector) {
+  if (!slider) return;
+
+  const getStep = () => {
+    const item = slider.querySelector(itemSelector);
+    if (!item) return 300;
+    const gap = parseFloat(getComputedStyle(slider).gap) || 16;
+    return item.offsetWidth + gap;
+  };
+
+  const updateNav = () => {
+    if (!prev || !next) return;
+    const maxScroll = slider.scrollWidth - slider.clientWidth;
+    prev.disabled = slider.scrollLeft <= 4;
+    next.disabled = slider.scrollLeft >= maxScroll - 4;
+  };
+
+  prev?.addEventListener("click", () => {
+    slider.scrollBy({ left: -getStep(), behavior: "smooth" });
+  });
+
+  next?.addEventListener("click", () => {
+    slider.scrollBy({ left: getStep(), behavior: "smooth" });
+  });
+
+  slider.addEventListener("scroll", updateNav, { passive: true });
+  window.addEventListener("resize", updateNav);
+  updateNav();
+}
+
 const reviewsSlider = document.getElementById("reviewsSlider");
 const reviewsPrev = document.getElementById("reviewsPrev");
 const reviewsNext = document.getElementById("reviewsNext");
+const gallerySlider = document.getElementById("gallerySlider");
+const galleryPrev = document.getElementById("galleryPrev");
+const galleryNext = document.getElementById("galleryNext");
 
-function getReviewScrollStep() {
-  const card = reviewsSlider?.querySelector(".review-card");
-  if (!card || !reviewsSlider) return 360;
-  const gap = parseFloat(getComputedStyle(reviewsSlider).gap) || 24;
-  return card.offsetWidth + gap;
-}
-
-function updateReviewsNav() {
-  if (!reviewsSlider || !reviewsPrev || !reviewsNext) return;
-  const maxScroll = reviewsSlider.scrollWidth - reviewsSlider.clientWidth;
-  reviewsPrev.disabled = reviewsSlider.scrollLeft <= 4;
-  reviewsNext.disabled = reviewsSlider.scrollLeft >= maxScroll - 4;
-}
-
-reviewsPrev?.addEventListener("click", () => {
-  reviewsSlider?.scrollBy({ left: -getReviewScrollStep(), behavior: "smooth" });
-});
-
-reviewsNext?.addEventListener("click", () => {
-  reviewsSlider?.scrollBy({ left: getReviewScrollStep(), behavior: "smooth" });
-});
-
-reviewsSlider?.addEventListener("scroll", updateReviewsNav, { passive: true });
-window.addEventListener("resize", updateReviewsNav);
-updateReviewsNav();
+initHorizontalScroll(reviewsSlider, reviewsPrev, reviewsNext, ".review-card");
+initHorizontalScroll(gallerySlider, galleryPrev, galleryNext, ".gallery-item");
 
 const observer = new IntersectionObserver(
   (entries) => {
@@ -170,14 +180,14 @@ const observer = new IntersectionObserver(
   { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
 );
 
-document.querySelectorAll(".section:not(#contacts):not(.reviews-section), .award-card, .benefit-card, .coach-card, .price-card, .age-card, .branch-card, .news-item").forEach((el) => {
+document.querySelectorAll(".section:not(#contacts):not(.reviews-section):not(.gallery-section), .award-card, .benefit-card, .coach-card, .price-card, .age-card, .branch-card, .news-item").forEach((el) => {
   el.style.opacity = "0";
   el.style.transform = "translateY(24px)";
   el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
   observer.observe(el);
 });
 
-document.querySelectorAll(".reviews-section .container").forEach((el) => {
+document.querySelectorAll(".reviews-section .container, .gallery-section .container").forEach((el) => {
   el.style.opacity = "0";
   el.style.transform = "translateY(24px)";
   el.style.transition = "opacity 0.6s ease, transform 0.6s ease";

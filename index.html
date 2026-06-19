@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20">
+  <link rel="stylesheet" href="css/styles.css?v=23">
   <link rel="icon" href="images/logo.png?v=2" type="image/png">
 </head>
 <body>
@@ -310,28 +310,94 @@
     </div>
   </section>
 
-  <section class="section" id="gallery">
+  <section class="section gallery-section" id="gallery">
     <div class="container">
-      <span class="section-label">Галерея</span>
-      <h2 class="section-title">Наши <span>моменты</span></h2>
-      <p style="color: var(--gray); margin-bottom: 1.5rem; font-size: 0.9rem;">
-        Фото с тренировок и соревнований. Следите за новостями в наших соцсетях!
-      </p>
-      <div class="gallery-grid">
-        <div class="gallery-item">
-          <img src="images/gallery-1.png?v=2" alt="Пирамида — команда Легион" loading="lazy">
+      <div class="gallery-header">
+        <div>
+          <span class="section-label">Галерея</span>
+          <h2 class="section-title">Наши <span>моменты</span></h2>
+          <p class="gallery-desc">Фото с тренировок и соревнований. Следите за новостями в наших соцсетях!</p>
         </div>
-        <div class="gallery-item">
-          <img src="images/gallery-2.png?v=2" alt="Победа на пьедестале" loading="lazy">
+        <div class="gallery-nav">
+          <button type="button" class="gallery-nav-btn" id="galleryPrev" aria-label="Предыдущие фото" disabled>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="gallery-nav-btn" id="galleryNext" aria-label="Следующие фото">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
-        <div class="gallery-item">
-          <img src="images/gallery-3.png?v=3" alt="Выступление на соревнованиях в Москве" loading="lazy">
-        </div>
-        <div class="gallery-item">
-          <img src="images/gallery-4.png?v=2" alt="Команда Легион с тренером" loading="lazy">
-        </div>
-        <div class="gallery-item">
-          <img src="images/gallery-5.png?v=4" alt="Команда Легион — награждение" loading="lazy">
+      </div>
+      <div class="gallery-slider-outer">
+        <div class="gallery-slider" id="gallerySlider" tabindex="0" role="region" aria-label="Галерея фотографий">
+          <div class="gallery-item">
+            <img src="images/gallery-1.png?v=2" alt="Пирамида — команда Легион" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-2.png?v=2" alt="Победа на пьедестале" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-3.png?v=3" alt="Выступление на соревнованиях в Москве" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-4.png?v=2" alt="Команда Легион с тренером" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-5.png?v=4" alt="Команда Легион — награждение" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-6.png" alt="Стойка на руках — Легион" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-7.png" alt="Команда Легион с медалями" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-8.png" alt="Гибкость в станте на соревнованиях" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-9.png" alt="Пирамиду с тренером — Легион" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-10.png" alt="Групповой стант на сцене" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-11.png" alt="Стойка на руках — команда" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-12.png" alt="Пирамида на соревнованиях в Москве" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-13.png" alt="Групповой стант — Легион" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-14.png" alt="Прыжок с помпонами" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-15.png" alt="Групповые стойки на мате" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-16.png" alt="Выступление с помпонами" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-17.png" alt="Пирамида на соревнованиях" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-18.png" alt="Пирамида с помпонами — Легион" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-19.png" alt="Парные стойки — Легион" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-20.png" alt="Стант на соревнованиях — юная команда" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-21.png" alt="Команда Легион с кубком и грамотой" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-22.png" alt="Выступление с мегафонами — Легион" loading="lazy">
+          </div>
+          <div class="gallery-item">
+            <img src="images/gallery-23.png" alt="Пирамида 52 Легион на соревнованиях в Москве" loading="lazy">
+          </div>
         </div>
       </div>
     </div>
@@ -598,6 +664,6 @@
   <script src="js/map.js?v=4"></script>
   <script src="js/news-data.js?v=7"></script>
   <script src="js/news.js"></script>
-  <script src="js/main.js?v=5"></script>
+  <script src="js/main.js?v=6"></script>
 </body>
 </html>
