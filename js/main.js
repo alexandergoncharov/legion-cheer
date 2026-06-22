@@ -4,6 +4,18 @@ const mobileMenu = document.getElementById("mobileMenu");
 const mobileClose = document.getElementById("mobileClose");
 const signupForm = document.getElementById("signupForm");
 const formSuccess = document.getElementById("formSuccess");
+const formError = document.getElementById("formError");
+const signupSubmit = document.getElementById("signupSubmit");
+
+const FORM_EMAIL = "cheer.legion@gmail.com";
+
+const BRANCH_LABELS = {
+  "teplyj-stan": "Тёплый Стан",
+  nagatinskij: "Нагатинская",
+  dobrolyubova: "Добролюбова",
+  "odintsovo-9": "Одинцово — школа №9",
+  "odintsovo-logos": "Одинцово — школа «Логос»",
+};
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightboxImg");
 const lightboxClose = document.getElementById("lightboxClose");
@@ -22,6 +34,128 @@ document.querySelectorAll(".mobile-menu a").forEach((link) => {
 });
 
 const ageInput = document.getElementById("age");
+const phoneInput = document.getElementById("phone");
+const consentInput = document.getElementById("consent");
+
+function clearFieldValidity(...fields) {
+  fields.forEach((field) => field?.setCustomValidity(""));
+}
+
+function bindValidityReset(...fields) {
+  fields.forEach((field) => {
+    field?.addEventListener("input", () => field.setCustomValidity(""));
+    field?.addEventListener("change", () => field.setCustomValidity(""));
+  });
+}
+
+function validateSignupForm() {
+  const nameInput = signupForm?.name;
+  const branchInput = signupForm?.branch;
+
+  clearFieldValidity(nameInput, phoneInput, branchInput, ageInput, consentInput);
+
+  let firstInvalid = null;
+
+  if (!nameInput?.value.trim()) {
+    nameInput.setCustomValidity("Укажите, как к вам обращаться.");
+    firstInvalid ??= nameInput;
+  }
+
+  const phoneDigits = extractPhoneDigits(phoneInput?.value || "");
+  if (!phoneDigits.length) {
+    phoneInput?.setCustomValidity("Укажите номер телефона.");
+    firstInvalid ??= phoneInput;
+  } else if (!isPhoneComplete(phoneInput.value)) {
+    phoneInput.setCustomValidity("Введите номер телефона полностью.");
+    firstInvalid ??= phoneInput;
+  }
+
+  if (!branchInput?.value) {
+    branchInput.setCustomValidity("Выберите филиал.");
+    firstInvalid ??= branchInput;
+  }
+
+  if (!ageInput?.value) {
+    ageInput?.setCustomValidity("Укажите возраст спортсмена.");
+    firstInvalid ??= ageInput;
+  }
+
+  if (!consentInput?.checked) {
+    consentInput.setCustomValidity("Подтвердите согласие на обработку персональных данных.");
+    firstInvalid ??= consentInput;
+  }
+
+  if (firstInvalid) {
+    firstInvalid.reportValidity();
+    return false;
+  }
+
+  return true;
+}
+
+bindValidityReset(signupForm?.name, phoneInput, signupForm?.branch, ageInput, consentInput);
+
+function extractPhoneDigits(value) {
+  let digits = value.replace(/\D/g, "");
+  if (!digits) return "";
+  if (digits.startsWith("8")) digits = `7${digits.slice(1)}`;
+  if (digits.startsWith("7")) digits = digits.slice(1);
+  return digits.slice(0, 10);
+}
+
+function formatPhone(digits) {
+  if (!digits) return "";
+
+  const part1 = digits.slice(0, 3);
+  const part2 = digits.slice(3, 6);
+  const part3 = digits.slice(6, 8);
+  const part4 = digits.slice(8, 10);
+
+  let formatted = `+7 (${part1}`;
+  if (digits.length < 3) return formatted;
+
+  formatted += ")";
+  if (!part2) return formatted;
+
+  formatted += ` ${part2}`;
+  if (!part3) return formatted;
+
+  formatted += `-${part3}`;
+  if (!part4) return formatted;
+
+  return `${formatted}-${part4}`;
+}
+
+function applyPhoneMask() {
+  if (!phoneInput) return;
+  const digits = extractPhoneDigits(phoneInput.value);
+  phoneInput.value = formatPhone(digits);
+}
+
+function isPhoneComplete(value) {
+  return extractPhoneDigits(value).length === 10;
+}
+
+phoneInput?.addEventListener("focus", () => {
+  if (!extractPhoneDigits(phoneInput.value)) {
+    phoneInput.value = "+7 (";
+  }
+});
+
+phoneInput?.addEventListener("input", applyPhoneMask);
+
+phoneInput?.addEventListener("paste", (e) => {
+  e.preventDefault();
+  const text = (e.clipboardData || window.clipboardData).getData("text");
+  phoneInput.value = text;
+  applyPhoneMask();
+});
+
+phoneInput?.addEventListener("blur", () => {
+  if (!extractPhoneDigits(phoneInput.value)) {
+    phoneInput.value = "";
+  }
+});
 
 function sanitizeAgeInput() {
   if (!ageInput) return;
@@ -49,16 +183,54 @@ ageInput?.addEventListener("drop", (e) => {
 
 ageInput?.addEventListener("blur", sanitizeAgeInput);
 
-signupForm?.addEventListener("submit", (e) => {
-  sanitizeAgeInput();
-  if (!ageInput?.value) {
-    e.preventDefault();
-    ageInput?.focus();
-    return;
-  }
+signupForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
-  signupForm.style.display = "none";
-  formSuccess.classList.add("show");
+  sanitizeAgeInput();
+
+  if (!validateSignupForm()) return;
+
+  const honey = signupForm.querySelector('[name="_honey"]');
+  if (honey?.value) return;
+
+  const name = signupForm.name?.value.trim();
+  const phone = signupForm.phone?.value.trim();
+  const branch = signupForm.branch?.value;
+  const age = ageInput.value;
+
+  if (!name || !phone || !branch) return;
+
+  formError.hidden = true;
+  signupSubmit.disabled = true;
+  const defaultLabel = signupSubmit.textContent;
+  signupSubmit.textContent = "Отправка…";
+
+  try {
+    const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(FORM_EMAIL)}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        phone,
+        branch: BRANCH_LABELS[branch] || branch,
+        age,
+        _subject: "Новая заявка — СК «Легион»",
+        _template: "table",
+        _captcha: "false",
+      }),
+    });
+
+    if (!response.ok) throw new Error("submit failed");
+
+    signupForm.style.display = "none";
+    formSuccess.classList.add("show");
+  } catch {
+    formError.hidden = false;
+    signupSubmit.disabled = false;
+    signupSubmit.textContent = defaultLabel;
+  }
 });
 
 document.querySelectorAll(".gallery-item").forEach((item) => {

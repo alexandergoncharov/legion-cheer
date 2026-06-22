@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=24">
+  <link rel="stylesheet" href="css/styles.css?v=25">
   <link rel="icon" href="images/logo.png?v=2" type="image/png">
 </head>
 <body>
@@ -483,14 +483,15 @@
         <p class="highlight">Первое посещение — бесплатно!</p>
         <p>Оставьте заявку, и мы свяжемся с вами, чтобы согласовать дату визита в клуб.</p>
       </div>
-      <form class="signup-form" id="signupForm">
+      <form class="signup-form" id="signupForm" novalidate>
+        <input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="form-group">
           <label for="name">Ваше имя</label>
           <input type="text" id="name" name="name" required placeholder="Как к вам обращаться?">
         </div>
         <div class="form-group">
           <label for="phone">Ваш телефон</label>
-          <input type="tel" id="phone" name="phone" required placeholder="+7 (___) ___-__-__">
+          <input type="tel" id="phone" name="phone" required placeholder="+7 (___) ___-__-__" inputmode="tel" autocomplete="tel">
         </div>
         <div class="form-group">
           <label for="branch">Филиал</label>
@@ -508,10 +509,11 @@
           <input type="tel" id="age" name="age" required placeholder="Введите возраст..." inputmode="numeric" pattern="[0-9]+" maxlength="2" autocomplete="off" oninput="this.value=this.value.replace(/\D/g,'').slice(0,2)">
         </div>
         <label class="form-checkbox">
-          <input type="checkbox" required>
+          <input type="checkbox" id="consent" required>
           <span>Я согласен с <button type="button" class="legal-inline-link" data-legal-open data-legal-section="privacy">политикой конфиденциальности</button> и обработкой персональных данных в соответствии с <button type="button" class="legal-inline-link" data-legal-open>пользовательским соглашением</button></span>
         </label>
-        <button type="submit" class="btn btn-primary" style="width: 100%;">Отправить заявку</button>
+        <button type="submit" class="btn btn-primary" id="signupSubmit" style="width: 100%;">Отправить заявку</button>
+        <p class="form-error" id="formError" hidden>Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.</p>
       </form>
       <div class="form-success" id="formSuccess">
         <h3>Спасибо!</h3>
@@ -668,6 +670,6 @@
   <script src="js/map.js?v=4"></script>
   <script src="js/news-data.js?v=7"></script>
   <script src="js/news.js"></script>
-  <script src="js/main.js?v=6"></script>
+  <script src="js/main.js?v=10"></script>
 </body>
 </html>
