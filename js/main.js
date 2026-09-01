@@ -15,6 +15,7 @@ const BRANCH_LABELS = {
   dobrolyubova: "Добролюбова",
   "odintsovo-9": "Одинцово — школа №9",
   "odintsovo-logos": "Одинцово — школа «Логос»",
+  "yaroslavl-tsport": "Ярославль — Т-Спорт",
 };
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightboxImg");
